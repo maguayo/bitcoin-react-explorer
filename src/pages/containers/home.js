@@ -3,47 +3,95 @@ import HomeLayout from '../components/home-layout';
 import BlockList from '../../blocklist/blocklist';
 import Header from '../../header/header';
 import WidgetOverview from '../../widget/widget-overview';
-import data from '../../api.json';
 import { Pager, Row } from 'react-bootstrap';
 import './home.css'
 import HttpClient from '../../httpclient.js'
-
+import pretty from 'prettysize';
 
 class Home extends Component{
 	constructor(props) {
     	super(props);
-	    this.state = {blocks: []};
+	    this.state = {
+	    	blocks: [],
+	    	blockchain: {
+	    		getblockchaininfo: {
+	    			size_on_disk: 0
+	    		},
+	    		getnettotals: {
+	    			totalbytesrecv: 0,
+	    			totalbytessent: 0
+	    		}
+	    	},
+	    	mempool: {
+	    		txns: 0,
+	    		bytes: 0
+	    	}
+	    };
 	}
 
 	componentDidMount() {
-		this.UserList();
+		this.BlockList();
+		this.BlockchainInfo();
+		this.MempoolInfo();
 	}
 
-	UserList() {
+	BlockList() {
 		const apiURL = 'http://api.nodepark.com/v1/blocks/'; // Get 10 results
 		const headerOptions = {};
 
 		const get = HttpClient.get(apiURL, headerOptions);
 
 		get.then((response)=>{ // Promise
+			console.log("Blocks:")
+			console.log(response)
 		  this.setState({blocks: response.result})
 		}).catch((err)=>{
-		  console.err(err);
+		  console.error(err);
 		});
-	 }
+	}
+
+	BlockchainInfo() {
+		const apiURL = 'http://api.nodepark.com/v1/status/'; // Get 10 results
+		const headerOptions = {};
+
+		const get = HttpClient.get(apiURL, headerOptions);
+
+		get.then((response)=>{ // Promise
+			console.log(response)
+		  this.setState({blockchain: response.result})
+		}).catch((err)=>{
+		  console.error(err);
+		});
+	}
+
+
+	MempoolInfo() {
+		const apiURL = 'http://api.nodepark.com/v1/mempool/'; // Get 10 results
+		const headerOptions = {};
+
+		const get = HttpClient.get(apiURL, headerOptions);
+
+		get.then((response)=>{ // Promise
+			console.log("Mempool:")
+			console.log(response)
+			this.setState({
+			  	mempool: {txns: response.result.txs.length, bytes: response.result.bytes}
+		    })
+		}).catch((err)=>{
+		  console.error(err);
+		});
+	}
 
 	render (){
-		console.log("This works: ")
-		console.log(this.state.blocks)
 		return (
 			<HomeLayout>
 				<Header />
 				<section className="WidgetOverviewContainer container">
 					<Row>
-						<WidgetOverview size_xs={6} size_md={3} number="221 days, 7 hours" title="Uptime" icon="a" bg="#3598dc" color="#fff"/>
-						<WidgetOverview size_xs={6} size_md={3} number="221.056" title="Txns per day" icon="a" bg="#8BC34A" color="#fff" />
-						<WidgetOverview size_xs={6} size_md={3} number="132.865 tx / 50 MB" title="Mempool" icon="a" bg="#3598dc" color="#fff" />
-						<WidgetOverview size_xs={6} size_md={3} number="200 GB" title="Blockchain Size" icon="a" bg="#32c5d2" color="#fff" />
+						<WidgetOverview size_xs={6} size_md={3} number={pretty(this.state.blockchain.getnettotals.totalbytesrecv)} title="Network (recv)" icon="a" bg="#3598dc" color="#fff"/>
+						<WidgetOverview size_xs={6} size_md={3} number={pretty(this.state.blockchain.getnettotals.totalbytessent)} title="Network (sent)" icon="a" bg="#8BC34A" color="#fff" />
+						<WidgetOverview size_xs={6} size_md={3} number={this.state.mempool.txns + " tx / " + pretty(this.state.mempool.bytes)} title="Mempool" icon="a" bg="#F44336" color="#fff" />
+						<WidgetOverview size_xs={6} size_md={3} number={pretty(this.state.blockchain.getblockchaininfo.size_on_disk)} title="Blockchain Size" icon="a" bg="#32c5d2" color="#fff" />
 					</Row>
 				</section>
 				<section className="container">

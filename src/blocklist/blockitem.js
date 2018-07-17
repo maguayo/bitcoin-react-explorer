@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'react-moment';
+import pretty from 'prettysize';
 
 class BlockItem extends Component{
 	handleClick = (event) => {
@@ -9,11 +11,11 @@ class BlockItem extends Component{
 		return (
 			<tr onClick={this.handleClick}>
 				<td>{this.props.height}</td>
-				<td>{this.props.age}</td>
+				<td><Moment unix fromNow>{this.props.age}</Moment></td>
 				<td>{this.props.txs}</td>
 				<td>?</td>
-				<td>{this.props.weight}</td>
-				<td>{this.props.size}</td>
+				<td>{pretty(this.props.weight)}</td>
+				<td>{pretty(this.props.size)}</td>
 			</tr>
 		)
 	}
