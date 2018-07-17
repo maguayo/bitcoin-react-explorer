@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-import pretty from 'prettysize';
+import {prettySize} from 'pretty-size';
 
 class BlockItem extends Component{
 	handleClick = (event) => {
@@ -14,8 +14,8 @@ class BlockItem extends Component{
 				<td><Moment unix fromNow>{this.props.age}</Moment></td>
 				<td>{this.props.txs}</td>
 				<td>?</td>
-				<td>{pretty(this.props.weight)}</td>
-				<td>{pretty(this.props.size)}</td>
+				<td>{prettySize(this.props.weight, true)}</td>
+				<td>{prettySize(this.props.size, true)}</td>
 			</tr>
 		)
 	}
