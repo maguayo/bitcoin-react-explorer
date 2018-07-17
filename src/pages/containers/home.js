@@ -97,7 +97,7 @@ class Home extends Component{
 				<section className="container">
 					<h3>Latest Blocks</h3>
 					<BlockList data={this.state.blocks} />
-					<Pager>
+					<Pager className="hide">
 					  <Pager.Item previous href="#">
 					    &larr; Previous Page
 					  </Pager.Item>

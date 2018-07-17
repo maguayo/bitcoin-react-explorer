@@ -17,7 +17,7 @@ module.exports = (env) => {
   return {
 
     entry: {
-      "bitcoin-explorer": path.resolve(__dirname, './src/entries/home.js'),
+      "bitcoin-explorer": path.resolve(__dirname, './src/index.js'),
     },
     output: {
       path: path.resolve(__dirname, 'dist'),

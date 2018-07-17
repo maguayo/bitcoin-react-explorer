@@ -49,6 +49,7 @@
     "react": "16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "16.4.1",
-    "react-moment": "^0.7.9"
+    "react-moment": "^0.7.9",
+    "react-router-dom": "^4.3.1"
   }
 }

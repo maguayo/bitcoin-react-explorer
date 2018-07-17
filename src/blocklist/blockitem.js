@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import {prettySize} from 'pretty-size';
+import { Link } from 'react-router-dom'
+
 
 class BlockItem extends Component{
-	handleClick = (event) => {
-		console.log(this.props.height)
-	}
 	render (){
 		return (
-			<tr onClick={this.handleClick}>
-				<td>{this.props.height}</td>
+			<tr>
+				<td><Link to={"/block/" + this.props.height}>{this.props.height}</Link></td>
 				<td><Moment unix fromNow>{this.props.age}</Moment></td>
 				<td>{this.props.txs}</td>
 				<td>?</td>
