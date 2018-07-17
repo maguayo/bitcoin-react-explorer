@@ -1,0 +1,19 @@
+.main-header .logo{
+	float: left;
+    margin-top: -3px;
+    margin-right: 8px;
+    width: 27px;
+}
+
+.main-header.navbar-default{
+    background-color: #343a40!important;
+    border-color: #343a40!important;
+    border-radius: 0px;
+}
+
+.main-header.navbar-default .navbar-brand{
+	color: #fff;
+}
+.main-header.navbar-default .navbar-nav>li>a{
+	color: #b1b1b1;
+}

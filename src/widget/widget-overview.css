@@ -1,0 +1,21 @@
+.WidgetOverview{
+	height: 100px;
+	text-align: right;
+}
+
+.WidgetOverview span{font-size: 1.45em}
+.WidgetOverview p{font-size: 13px;}
+
+.WidgetOverview .center-inner{
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+.WidgetOverview .center-inner .inner{
+	display: table-cell;
+	vertical-align: middle;
+	border: 1px solid #ccc;
+	padding-left: 15px;
+	padding-right: 15px;
+}
