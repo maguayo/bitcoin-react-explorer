@@ -79,6 +79,12 @@ class Status extends Component{
 	}
 
 	render (){
+		let pruned = this.state.blockchain.getblockchaininfo.pruned;
+		if (pruned){
+			pruned = "Yes"
+		}else{
+			pruned = "No"
+		}
 		return (
 			<section className="Status">
 				<Header />
@@ -108,7 +114,7 @@ class Status extends Component{
 							<th className="table-active properties-header">Blockchain Size</th>
 							<td className="monospace">
 								{prettySize(this.state.blockchain.getblockchaininfo.size_on_disk, true)}
-								<span className="text-muted"> (pruned: {this.state.blockchain.getblockchaininfo.pruned})</span>
+								<span className="text-muted"> (Pruned: {pruned})</span>
 							</td>
 						</tr>
 						<tr>
