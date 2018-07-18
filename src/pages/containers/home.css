@@ -1,3 +1,11 @@
 .WidgetOverviewContainer{
 	padding: 25px 15px;
 }
+
+
+@media (max-width: 767px){
+	.widget-home-1{padding-right: 3px;}
+	.widget-home-2{padding-left: 3px;}
+	.widget-home-3{padding-right: 3px;}
+	.widget-home-4{padding-left: 3px;}
+}

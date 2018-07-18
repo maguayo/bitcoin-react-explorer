@@ -12,8 +12,8 @@ class BlockItem extends Component{
 				<td><Link to={"/block/" + this.props.height}>{this.props.height}</Link></td>
 				<td><Moment unix fromNow>{this.props.age}</Moment></td>
 				<td>{this.props.txs}</td>
-				<td>?</td>
-				<td>{prettySize(this.props.weight, true)}</td>
+				<td className="hidden-xs">?</td>
+				<td className="hidden-xs">{prettySize(this.props.weight, true)}</td>
 				<td>{prettySize(this.props.size, true)}</td>
 			</tr>
 		)

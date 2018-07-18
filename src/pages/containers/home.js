@@ -88,10 +88,42 @@ class Home extends Component{
 				<Header />
 				<section className="WidgetOverviewContainer container">
 					<Row>
-						<WidgetOverview size_xs={6} size_md={3} number={prettySize(this.state.blockchain.getnettotals.totalbytesrecv, true)} title="Network (recv)" icon="a" bg="#3598dc" color="#fff"/>
-						<WidgetOverview size_xs={6} size_md={3} number={prettySize(this.state.blockchain.getnettotals.totalbytessent, true)} title="Network (sent)" icon="a" bg="#8BC34A" color="#fff" />
-						<WidgetOverview size_xs={6} size_md={3} number={this.state.mempool.txns + " tx / " + prettySize(this.state.mempool.bytes, true)} title="Mempool" icon="a" bg="#F44336" color="#fff" />
-						<WidgetOverview size_xs={6} size_md={3} number={prettySize(this.state.blockchain.getblockchaininfo.size_on_disk, true)} title="Blockchain Size" icon="a" bg="#32c5d2" color="#fff" />
+						<WidgetOverview 
+							size_xs={6}
+							size_md={3}
+							number={prettySize(this.state.blockchain.getnettotals.totalbytesrecv, true)}
+							title="Network (recv)" 
+							icon="a" 
+							bg="#3598dc" 
+							color="#fff" 
+							className="widget-home-1" />
+						<WidgetOverview 
+							size_xs={6} 
+							size_md={3} 
+							number={prettySize(this.state.blockchain.getnettotals.totalbytessent, true)} 
+							title="Network (sent)" 
+							icon="a" 
+							bg="#8BC34A" 
+							color="#fff" 
+							className="widget-home-2" />
+						<WidgetOverview 
+							size_xs={6} 
+							size_md={3} 
+							number={this.state.mempool.txns + " tx / " + prettySize(this.state.mempool.bytes, true)} 
+							title="Mempool" 
+							icon="a" 
+							bg="#F44336" 
+							color="#fff" 
+							className="widget-home-3" />
+						<WidgetOverview 
+							size_xs={6} 
+							size_md={3} 
+							number={prettySize(this.state.blockchain.getblockchaininfo.size_on_disk, true)} 
+							title="Blockchain Size" 
+							icon="a" 
+							bg="#32c5d2" 
+							color="#fff" 
+							className="widget-home-4" />
 					</Row>
 				</section>
 				<section className="container">

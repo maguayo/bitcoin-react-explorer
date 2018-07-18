@@ -11,8 +11,8 @@ function BlockList(props){
 					<th>Height</th>
 					<th>Age</th>
 					<th>Txs</th>
-					<th>Miner</th>
-					<th>Weight</th>
+					<th className="hidden-xs">Miner</th>
+					<th className="hidden-xs">Weight</th>
 					<th>Size</th>
 				</tr>
 			</thead>

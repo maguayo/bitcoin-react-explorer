@@ -19,3 +19,11 @@
 	padding-left: 15px;
 	padding-right: 15px;
 }
+
+@media (max-width: 767px){
+    .WidgetOverview .center-inner .inner{
+		padding: 0px 10px;
+	}
+	.WidgetOverview span{font-size: 1.18em;}
+		.WidgetOverview {margin-bottom: 6px;}
+}
