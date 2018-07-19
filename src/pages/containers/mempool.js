@@ -4,6 +4,7 @@ import { Pager, Row, Table } from 'react-bootstrap';
 import './mempool.css'
 import HttpClient from '../../httpclient.js'
 import {prettySize} from 'pretty-size';
+import socketIOClient from 'socket.io-client'
 
 class Status extends Component{
 	constructor(props) {
@@ -40,6 +41,17 @@ class Status extends Component{
 
 	render (){
 		var cont = 0;
+		const socket = socketIOClient("http://127.0.0.1:3002", { transport : ['websocket'] })
+    
+	    // socket.on is another method that checks for incoming events from the server
+	    // This method is looking for the event 'change color'
+	    // socket.on takes a callback function for the first argument
+	    socket.on('change tx', (msg) => {
+	      // setting the color of our button
+	      	var d1 = document.getElementById('tBodyMempoolTxs');
+			d1.insertAdjacentHTML('afterbegin', '<tr class="new-tx"><td>' + msg + '</td></tr>')
+	    })
+
 		return (
 			<section>
 				<Header />
@@ -73,7 +85,7 @@ class Status extends Component{
 					<h3>Mempool transactions</h3>
 					<hr />
 					<Table striped bordered hover>
-						<tbody>
+						<tbody id="tBodyMempoolTxs">
 							{
 								this.state.mempool.txs.map((t) => {
 									cont = cont + 1
