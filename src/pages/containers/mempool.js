@@ -10,15 +10,32 @@ class Status extends Component{
 	constructor(props) {
     	super(props);
 	   	this.state = {
+	   		socket: null,
 	    	mempool: {
 	    		txns: 0,
 	    		bytes: 0,
 	    		txs: [""]
 	    	}
 	    };
+	    /*this.socket = socketIOClient("http://163.172.216.140:3002");*/
+	}
+
+	componentWillUnmount(){
+		/*this.socket.close();*/
 	}
 
 	componentDidMount() {
+		/*this.socket.on('change tx', (msg) => {
+	      // setting the color of our button
+	      	var d1 = document.getElementById('tBodyMempoolTxs');
+			d1.insertAdjacentHTML('afterbegin', '<tr class="new-tx"><td>' + msg + '</td></tr>')
+	    });
+	    this.socket.on('change bk', (msg) => {
+	      // setting the color of our button
+	      	var d1 = document.getElementById('tBodyMempoolTxs');
+			d1.innerHTML = '';
+			this.MempoolInfo();
+	    });*/
 		this.MempoolInfo();
 	}
 
@@ -39,18 +56,11 @@ class Status extends Component{
 		});
 	}
 
-	render (){
-		var cont = 0;
-		const socket = socketIOClient("http://127.0.0.1:3002", { transport : ['websocket'] })
-    
+	render (){    
 	    // socket.on is another method that checks for incoming events from the server
 	    // This method is looking for the event 'change color'
 	    // socket.on takes a callback function for the first argument
-	    socket.on('change tx', (msg) => {
-	      // setting the color of our button
-	      	var d1 = document.getElementById('tBodyMempoolTxs');
-			d1.insertAdjacentHTML('afterbegin', '<tr class="new-tx"><td>' + msg + '</td></tr>')
-	    })
+	    var cont = 0;
 
 		return (
 			<section>
