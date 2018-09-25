@@ -6,6 +6,7 @@ import Home from './pages/containers/home';
 import Blocks from './pages/containers/blocks';
 import Status from './pages/containers/status';
 import Mempool from './pages/containers/mempool';
+import BlockSingle from './pages/containers/block-single';
 
 // import react router
 import { BrowserRouter, Route } from 'react-router-dom'
@@ -15,12 +16,11 @@ import './index.css'
 const App = () => (
   <BrowserRouter>
     <div className="sans-serif">
-      <Route path="/view/:postId" render={() => <h1>Contact Us</h1>}  />
-      
+      <Route exact path="/" component={Home} />
       <Route path="/mempool" component={Mempool} />
       <Route path="/status" component={Status} />
-      <Route path="/blocks" component={Blocks} />
-      <Route exact path="/" component={Home} />
+      <Route exact path="/blocks" component={Blocks} />
+      <Route path="/blocks/:blockHash" component={BlockSingle}  />
     </div>
   </BrowserRouter>
 );

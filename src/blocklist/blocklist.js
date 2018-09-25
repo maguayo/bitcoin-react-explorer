@@ -19,7 +19,7 @@ function BlockList(props){
 			<tbody>
 				{
 					blocks.map((item) => {
-						return <BlockItem key={item.height} height={item.height} age={item.time} txs={item.tx_num} weight={item.weight} size={item.size} />
+						return <BlockItem key={item.height} hash={item.hash} height={item.height} age={item.time} txs={item.tx_num} weight={item.weight} size={item.size} />
 					})
 				}
 			</tbody>

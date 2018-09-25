@@ -9,7 +9,7 @@ class BlockItem extends Component{
 	render (){
 		return (
 			<tr>
-				<td><Link to={"/block/" + this.props.height}>{this.props.height}</Link></td>
+				<td><Link to={"/blocks/" + this.props.hash}>{this.props.height}</Link></td>
 				<td><Moment unix fromNow>{this.props.age}</Moment></td>
 				<td>{this.props.txs}</td>
 				<td className="hidden-xs">?</td>
@@ -22,6 +22,7 @@ class BlockItem extends Component{
 
 BlockItem.propTypes = {
 	height: PropTypes.number,
+	hash: PropTypes.string,
 	age: PropTypes.number,
 	txs: PropTypes.number,
 	size: PropTypes.number,
