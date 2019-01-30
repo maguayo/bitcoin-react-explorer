@@ -21,7 +21,7 @@ class Blocks extends Component{
 	}
 
 	BlockList() {
-		const apiURL = 'https://api.nodepark.com/v1/blocks/'; // Get 10 results
+		const apiURL = 'http://api.nodepark.com/v1/blocks/'; // Get 10 results
 		const headerOptions = {};
 
 		const get = HttpClient.get(apiURL, headerOptions);

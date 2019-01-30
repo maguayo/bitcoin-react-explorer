@@ -47,7 +47,7 @@ class Status extends Component{
 	}
 
 	BlockchainInfo() {
-		const apiURL = 'https://api.nodepark.com/v1/status/'; // Get 10 results
+		const apiURL = 'http://api.nodepark.com/v1/status/'; // Get 10 results
 		const headerOptions = {};
 
 		const get = HttpClient.get(apiURL, headerOptions);
@@ -62,7 +62,7 @@ class Status extends Component{
 
 
 	MempoolInfo() {
-		const apiURL = 'https://api.nodepark.com/v1/mempool/'; // Get 10 results
+		const apiURL = 'http://api.nodepark.com/v1/mempool/'; // Get 10 results
 		const headerOptions = {};
 
 		const get = HttpClient.get(apiURL, headerOptions);

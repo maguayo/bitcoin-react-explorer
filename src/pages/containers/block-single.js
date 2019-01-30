@@ -4,14 +4,18 @@ import BlockList from '../../blocklist/blocklist';
 import Header from '../../header/header';
 import WidgetOverview from '../../widget/widget-overview';
 import { Pager, Row } from 'react-bootstrap';
-import './home.css'
+import './block-single.css'
 import HttpClient from '../../httpclient.js'
 import {prettySize} from 'pretty-size';
+import {numeral} from 'numeral';
 
 class BlockSingle extends Component{
+
 	constructor(props) {
     	super(props);
 	    this.state = {
+	    	url_hash: this.props.match.params.blockHash,
+	    	next: "",
 	    	block: {
 	    		bits: "",
 				chainwork: "",
@@ -24,15 +28,16 @@ class BlockSingle extends Component{
 				nextblockhash: "",
 				nonce: "",
 				previousblockhash: "",
-				size: "",
+				size: 0,
 				strippedsize: "",
 				time: "",
 				tx: "",
 				version: "",
 				nTx: "",
 				versionHex: "",
-				weight: ""
-	    	}
+				weight: "",
+	    	},
+	    	raw: ''
 	    };
 	}
 
@@ -41,11 +46,8 @@ class BlockSingle extends Component{
 	}
 
 	BlockGet() {
-		console.log("BlockHash:")
-		console.log(this.props.match.params.blockHash);
-		const apiURL = 'https://api.nodepark.com/v1/blocks/' + this.props.match.params.blockHash;
+		const apiURL = 'http://api.nodepark.com/v1/blocks/' + this.props.match.params.blockHash;
 		const headerOptions = {};
-
 		const get = HttpClient.get(apiURL, headerOptions);
 
 		get.then((response)=>{ // Promise
@@ -57,11 +59,24 @@ class BlockSingle extends Component{
 		});
 	}
 
+
+	numberWithCommas(x){
+		return x
+	}
+
 	render (){
+
+		if(this.state.block.nextblockhash){
+			this.state.next = <a className="word-wrap" href={/blocks/ + this.state.block.nextblockhash}>
+						{this.state.block.nextblockhash}
+					</a>
+		}else{
+			this.state.next = <span>None</span>
+		}
 		return (
 			<section>
 				<Header />
-				<section className="container">
+				<section className="container" id="block-single">
 					<h3> Block: {this.state.block.height} <br /> <small>{this.state.block.hash}</small> </h3>
 					<hr />
 					<ul className="nav nav-tabs mb-3">
@@ -73,30 +88,28 @@ class BlockSingle extends Component{
 						</li>
 					</ul>
 					<div className="tab-content">
-						<div className="tab-pane active show" id="tab-summary" role="tabpanel">
+						<div className="tab-pane active" id="tab-summary" role="tabpanel">
 							<div className="row">
 								<div className="col-md-6">
 									<div className="table-responsive">
 										<table className="table">
 											<tbody>
 												<tr>
-													<th className="table-active properties-header">Previous Block</th>
+													<th className="table-active properties-header">Prev Block</th>
 													<td className="monospace word-wrap">
-														<a className="word-wrap" href="/block/000000000000000000019dc28ec384756c7ec120ef10d07a50527bffa1511411">
-															000000000000000000019dc28ec384756c7ec120ef10d07a50527bffa1511411
+														<a className="word-wrap" href={/blocks/ + this.state.block.previousblockhash}>
+															{this.state.block.previousblockhash}
 														</a>
-														<br />
-														<span className="text-muted">#532,799</span>
 													</td>
 												</tr>
 												<tr>
-													<th className="table-active properties-header">Timestamp (utc)</th>
+													<th className="table-active properties-header">Timestamp</th>
 													<td className="monospace">
-														2018-07-20 12:43:26<br /><span className="text-muted"> (age 4:39)</span>
+														2018-07-20 12:43:26
 													</td>
 												</tr>
 												<tr>
-													<th className="table-active properties-header">Transaction Count</th>
+													<th className="table-active properties-header">TX Count</th>
 													<td className="monospace">{this.state.block.nTx}</td>
 												</tr>
 												<tr>
@@ -111,12 +124,12 @@ class BlockSingle extends Component{
 												</tr>
 												<tr>
 													<th className="table-active properties-header">Size</th>
-													<td className="monospace"><span>355,706 bytes</span></td>
+													<td className="monospace"><span>{prettySize(this.state.block.size)}</span></td>
 												</tr>
 												<tr>
 													<th className="table-active properties-header">Weight</th>
 													<td className="monospace">
-														<span>1,147,346 wu</span><br /><span className="text-muted"> (28.68% full)</span>
+														<span>{prettySize(this.state.block.weight)}</span>
 													</td>
 												</tr>
 												<tr className="border-bottom">
@@ -133,7 +146,9 @@ class BlockSingle extends Component{
 											<tbody>
 												<tr>
 													<th className="table-active properties-header">Next Block</th>
-													<td className="monospace word-wrap"><span>None</span><br /><span className="text-muted">(latest block)</span></td>
+													<td className="monospace word-wrap">
+														{this.state.next}	
+													</td>
 												</tr>
 												<tr>
 													<th className="table-active properties-header">Difficulty</th>
@@ -155,17 +170,19 @@ class BlockSingle extends Component{
 												</tr>
 												<tr>
 													<th className="table-active text-right">Merkle Root</th>
-													<td className="monospace word-wrap">a55a2c2a561d49cf5dabc800a22d45d66f49586ada6a861c75678eeeedbc4884</td>
+													<td className="monospace word-wrap">{this.state.block.merkleroot}</td>
 												</tr>
 												<tr>
 													<th className="table-active text-right">Chainwork</th>
-													<td className="monospace word-wrap">26c8a741f73e965e39950bc<br /><span className="text-muted"><span>(~</span><span>750.19</span><span> x 10</span><sup>24</sup><span> hashes)</span></span>
-												</td>
-												</tr>
-												<tr className="border-bottom">
-													<th className="table-active text-right">Miner</th>
 													<td className="monospace word-wrap">
-														<span>ViaBTC</span>
+														26c8a741f73e965e39950bc<br />
+														<span className="text-muted">
+															<span>(~</span>
+															<span>750.19</span>
+															<span> x 10</span>
+															<sup>24</sup>
+															<span> hashes)</span>
+														</span>
 													</td>
 												</tr>
 											</tbody>
@@ -173,6 +190,9 @@ class BlockSingle extends Component{
 									</div>
 								</div>
 							</div>
+						</div>
+						<div className="tab-pane" id="tab-raw" role="tabpanel">
+							
 						</div>
 					</div>
 
